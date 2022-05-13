@@ -1,0 +1,11 @@
+﻿@model Post
+@{
+
+}
+<h1>Post</h1>
+<div>
+<p>@Model.Title</p>
+<a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.ID">
+					Edit
+				</a>
+</div>
