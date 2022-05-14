@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<Post>
+@{
+
+}
 <h1>Home Page</h1>
 
+<img src="/Blog/wwwrootcontent/static/IMG_5175.jpg" alt="Nature pic" />
 <div>
 	<ul>
 		@foreach (var post in Model)
@@ -9,15 +13,7 @@
 			<li>
 				<a asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
 					@post.Title
-				</a>
-				|
-				<a asp-controller="Home" asp-action="Edit" asp-route-id="@post.ID">
-					Edit
-				</a>
-				|
-				<a asp-controller="Home" asp-action="Remove" asp-route-id="@post.ID">
-					Remove
-				</a>
+				</a>				
 			</li>			
 		}
 	</ul>

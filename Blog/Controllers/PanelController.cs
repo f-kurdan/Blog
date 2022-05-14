@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Blog.Data.Repository;
+﻿using Blog.Data.Repository;
 using Blog.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,18 +19,6 @@ namespace Blog.Controllers
         {
             var posts = _repo.GetAllPosts();
             return View(posts);
-        }
-
-        public IActionResult Post(int? id)
-        {
-            if (id == null)
-            {
-                return View(new Post());
-            }
-            var post = _repo.GetPost(id);
-            if (post == null)
-                return NotFound();
-            return View(post);
         }
 
         [HttpGet]

@@ -1,10 +1,6 @@
 using Blog.Data;
 using Blog.Data.Repository;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppDbContext") ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
 
 builder.Services.AddTransient<IRepository, Repository>();
-
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
@@ -29,7 +24,6 @@ builder.Services.ConfigureApplicationCookie(options => options.LoginPath = "/Aut
 builder.Services.AddMvc(d => d.EnableEndpointRouting = false);
 
 var app = builder.Build();
-
 
 using (var scope = app.Services.CreateScope())
 {
@@ -59,6 +53,8 @@ using (var scope = app.Services.CreateScope())
         userMgr.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
     }
 }
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 

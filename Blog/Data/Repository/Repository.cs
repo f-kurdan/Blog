@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Blog.Models;
+﻿using Blog.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Data.Repository
@@ -22,7 +17,6 @@ namespace Blog.Data.Repository
             _context.Add(post);
         }
 
-
         public List<Post> GetAllPosts()
         {
             return _context.Posts.ToList();
@@ -37,7 +31,7 @@ namespace Blog.Data.Repository
         {
             _context.Posts.Remove(GetPost(id));
         }
-        
+
         public void UpdatePost(Post post)
         {
             _context.Posts.Update(post);
@@ -45,9 +39,9 @@ namespace Blog.Data.Repository
 
         public async Task<bool> SaveChangesAsync()
         {
-           if(await _context.SaveChangesAsync() > 0)
+            if (await _context.SaveChangesAsync() > 0)
                 return true;
-           return false;
+            return false;
         }
     }
 }
