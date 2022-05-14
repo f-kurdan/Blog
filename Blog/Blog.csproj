@@ -26,4 +26,11 @@
       <PackageReference Include="PostSharp" Version="6.10.10" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="Views\Panel\Index.cshtml">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

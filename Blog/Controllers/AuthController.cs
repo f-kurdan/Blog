@@ -23,14 +23,14 @@ namespace Blog.Controllers
         public async Task<IActionResult> Login(LoginViewModels vm)
         {
             await _signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Panel");
         }
 
         [HttpGet]
         public async Task<ActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("index", "Home");
+            return RedirectToAction("index", "Panel");
         }
     }
 }
