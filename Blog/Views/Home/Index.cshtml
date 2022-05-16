@@ -2,9 +2,12 @@
 @{
 
 }
-<h1>Home Page</h1>
-
-<img src="~/content/static/IMG_5175.jpg" alt="Nature pic" width="600" />
+@*<h1>Home Page</h1>
+*@
+@*<img src="~/content/static/IMG_6006.JPG" alt="Nature pic" width="100%" />*@
+<div class="main-img">
+	<span class="title">My Blog Post</span>
+</div>
 <div>
 	<ul>
 		@foreach (var post in Model)
@@ -13,8 +16,8 @@
 			<li>
 				<a asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
 					@post.Title
-				</a>				
-			</li>			
+				</a>
+			</li>
 		}
 	</ul>
 </div>

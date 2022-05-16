@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <None Include="..\.editorconfig" Link=".editorconfig" />
-      <None Include="wwwroot\content\static\pexels-sam-kolder-2387873.jpg" />
     </ItemGroup>
 
     <ItemGroup>

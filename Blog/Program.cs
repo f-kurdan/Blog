@@ -1,4 +1,5 @@
 using Blog.Data;
+using Blog.Data.FileManager;
 using Blog.Data.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppDbContext") ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
 
 builder.Services.AddTransient<IRepository, Repository>();
+builder.Services.AddTransient<IFileManager, FileManager>();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {

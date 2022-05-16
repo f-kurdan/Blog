@@ -8,10 +8,12 @@ namespace Blog.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
+			// Method intentionally left empty.
 		}
 
 		protected override void Down(MigrationBuilder migrationBuilder)
 		{
+			// Method intentionally left empty.
 		}
 	}
 }

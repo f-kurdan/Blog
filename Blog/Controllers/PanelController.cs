@@ -1,5 +1,7 @@
-﻿using Blog.Data.Repository;
+﻿using Blog.Data.FileManager;
+using Blog.Data.Repository;
 using Blog.Models;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +11,12 @@ namespace Blog.Controllers
     public class PanelController : Controller
     {
         private readonly IRepository _repo;
+        private readonly IFileManager _fileManager;
 
-        public PanelController(IRepository repo)
+        public PanelController(IRepository repo, IFileManager fileManager)
         {
             _repo = repo;
+            _fileManager = fileManager;
         }
 
         public IActionResult Index()
@@ -26,17 +30,32 @@ namespace Blog.Controllers
         {
             if (id == null)
             {
-                return View(new Post());
+                return View(new PostViewModel());
             }
-            var post = _repo.GetPost(id);
-            if (post == null)
-                return NotFound();
-            return View(post);
+            else
+            {
+                var post = _repo.GetPost(id);
+                var vm = new PostViewModel()
+                {
+                    ID = post.ID,
+                    Title = post.Title,
+                    Body = post.Body,
+                };
+                return View(vm);
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Post post)
+        public async Task<IActionResult> Edit(PostViewModel vm)
         {
+            var post = new Post()
+            {
+                ID = vm.ID,
+                Title = vm.Title,
+                Body = vm.Body,
+                Image = await _fileManager.SaveImage(vm.Image)
+            };
+
             if (post.ID == 0)
             {
                 _repo.AddPost(post);
@@ -44,15 +63,15 @@ namespace Blog.Controllers
 
             _repo.UpdatePost(post);
             if (await _repo.SaveChangesAsync())
-                return RedirectToAction("Index");
-            return View(post);
+                return RedirectToAction("Index", "Panel");
+            return View(vm);
         }
 
         public async Task<IActionResult> Remove(int id)
         {
             _repo.RemovePost(id);
             await _repo.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Panel");
         }
     }
 }
