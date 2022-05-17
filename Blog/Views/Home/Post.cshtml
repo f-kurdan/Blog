@@ -24,7 +24,7 @@
             }
         </div>
         <div class="post-body">
-            @Model.Body
+           @Html.Raw( @Model.Body)
         </div>
         <a asp-controller="Panel" asp-action="Index">
         Back to the list of posts
