@@ -11,8 +11,7 @@
 	<div>
 		<nav>
 			<a asp-controller="Home" asp-action="Index">Home</a>
-
-			<a asp-controller="Panel" asp-action="Edit">Create Post</a>
+			
 			<a asp-controller="Panel" asp-action="Index">Admin Panel</a>
 
 			@if (User.Identity.IsAuthenticated)
@@ -25,8 +24,9 @@
 			}
 		</nav>
 	</div>
-	<div>
-		@RenderBody()
-	</div>
+<div>
+	@RenderBody()
+</div>
+@RenderSection("scripts", false)
 </body>
 </html>
