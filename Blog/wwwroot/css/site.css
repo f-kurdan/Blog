@@ -1,5 +1,7 @@
 ﻿body {
-    margin: 0%;
+    margin: 0;
+    background-color: #060813;
+    color: #fafafa;
 }
 
 a {
@@ -7,9 +9,9 @@ a {
     text-decoration: none;
 }
 
-    a:hover {
-        text-decoration: underline;
-    }
+a:hover {
+    text-decoration: underline;
+}
 
 
 nav {
@@ -20,19 +22,47 @@ nav {
     font-size: 120%
 }
 
-    nav a {
-        display: inline-block;
-        padding: 15px;
-    }
+nav a {
+    display: inline-block;
+    padding: 15px;
+}
+
 .main-img {
+    position: relative;
     height: 500px;
-    background-image: url(../content/static/1111.jpg);
+    background-image: url(../content/static/pexels-lumn-167699.jpg);
     background-position: center;
     background-size: cover;
 }
 
 .title {
     position: absolute;
-    color:white;
-    font-size: 200%;
+    color: white;
+    font-size: 300%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 45%;
+    text-shadow: 0 0 6px black;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    margin: auto;    
+}
+
+.post {
+    margin: 10px;
+    position: relative;
+    display: flex;
+    height: 400px;
+}
+
+.post img {
+    width: 100%;
+    object-fit: cover;
+}
+
+post-body {
+    margin: -5px 5px 0;
 }

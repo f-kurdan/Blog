@@ -8,6 +8,8 @@
 
     <ItemGroup>
       <None Include="..\.editorconfig" Link=".editorconfig" />
+      <None Include="wwwroot\lib\Trumbowyg-main\.github\FUNDING.yml" />
+      <None Include="wwwroot\lib\Trumbowyg-main\.github\ISSUE_TEMPLATE.md" />
     </ItemGroup>
 
     <ItemGroup>

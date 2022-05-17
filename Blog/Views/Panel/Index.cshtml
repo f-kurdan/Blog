@@ -2,23 +2,23 @@
 <h1>Admin Panel</h1>
 
 <div>
-	<ul>
-		@foreach (var post in Model)
-		{
-
-			<li>
-				<a asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
-					@post.Title
-				</a>
-				|
-				<a asp-controller="Panel" asp-action="Edit" asp-route-id="@post.ID">
-					Edit
-				</a>
-				|
-				<a asp-controller="Panel" asp-action="Remove" asp-route-id="@post.ID">
-					Remove
-				</a>
-			</li>			
-		}
-	</ul>
+    <ul>
+        @foreach (var post in Model)
+        {
+            <li>
+                <a asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
+                    @post.Title
+                </a>
+                |
+                <a asp-controller="Panel" asp-action="Edit" asp-route-id="@post.ID">
+                    Edit
+                </a>
+                |
+                <a asp-controller="Panel" asp-action="Remove" asp-route-id="@post.ID">
+                    Remove
+                </a>
+            </li>
+        }
+        <a asp-controller="Panel" asp-action="Edit">Create new post</a>
+    </ul>
 </div>

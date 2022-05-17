@@ -2,18 +2,34 @@
 @{
 
 }
-<h1>Post</h1>
+@* <h1>Post</h1> *@
 <div>
-	<p>@Model.Title</p>
+    @* <p>@Model.Title</p> *@
+    @* *@
+    @* @if (!string.IsNullOrEmpty(Model.Image)) *@
+    @* { *@
+    @*     var image_path = $"/image/{Model.Image}"; *@
+    @*     <img src="@image_path" alt="Some pic" width="500"/> *@
+    @* } *@
+    @* <p>@Model.Body</p> *@
+    <div class="container">
+        <div class="post">
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+                var image_path = $"/image/{Model.Image}";
+                <img src="@image_path" alt="Some pic" width="500"/>
+                <span class="title">
+                    @Model.Title
+                </span>
+            }
+        </div>
+        <div class="post-body">
+            @Model.Body
+        </div>
+        <a asp-controller="Panel" asp-action="Index">
+        Back to the list of posts
+        </a>
+    </div>
+    <br/>
 
-	@if (!string.IsNullOrEmpty(Model.Image))
-	{
-		var image_path = $"/image/{Model.Image}";
-		<img src="@image_path" alt="Some pic" width="500" />
-	}
-	<p>@Model.Body</p>
-	<br />
-	<a asp-controller="Panel" asp-action="Edit" asp-route-id="@Model.ID">
-		Edit
-	</a>
 </div>
