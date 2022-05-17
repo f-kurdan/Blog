@@ -40,6 +40,7 @@ namespace Blog.Controllers
                     ID = post.ID,
                     Title = post.Title,
                     Body = post.Body,
+                    CurrentImage = post.Image
                 };
                 return View(vm);
             }
@@ -53,13 +54,15 @@ namespace Blog.Controllers
                 ID = vm.ID,
                 Title = vm.Title,
                 Body = vm.Body,
-                Image = await _fileManager.SaveImage(vm.Image)
             };
 
+            if (vm.Image == null)
+                post.Image = vm.CurrentImage;
+            else
+               post.Image = await _fileManager.SaveImage(vm.Image);
+
             if (post.ID == 0)
-            {
                 _repo.AddPost(post);
-            }
 
             _repo.UpdatePost(post);
             if (await _repo.SaveChangesAsync())

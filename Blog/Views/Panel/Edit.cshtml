@@ -2,7 +2,7 @@
 @{
 
 }
-<link rel="stylesheet" href="trumbowyg/dist/ui/trumbowyg.min.css">
+<link rel="stylesheet" href="~/lib/Trumbowyg-main/dist/ui/trumbowyg.min.css">
 <div>
     <form asp-controller="Panel" asp-action="Edit" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="ID"/>
@@ -12,18 +12,21 @@
         </div>
         <div>
             <label>Body</label>
-            <input asp-for="Body"/>
+            <textarea id="editor" asp-for="Body"></textarea>
         </div>
         <div>
             <label>Image</label>
+            <input asp-for="CurrentImage" type="hidden"/>
             <input asp-for="Image"/>
         </div>
         <input type="submit" value="Submit"/>
     </form>
 </div>
-@* ReSharper disable once Razor.SectionNotResolved *@
 
 @section scripts {
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="trumbowyg/dist/trumbowyg.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/trumbowyg.min.js"></script>
+    <script>
+    $('#editor').trumbowyg();
+    </script>
 }
