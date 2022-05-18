@@ -11,6 +11,23 @@
             <input asp-for="Title"/>
         </div>
         <div>
+            <label>Description</label>
+            <input asp-for="Description"/>
+        </div>
+        <div>
+            <label>Tags</label>
+            <input asp-for="Tags"/>
+        </div>
+        <div>
+            <label>Category</label>
+            @*<input asp-for="Category"/>*@
+            <select asp-for="Category">
+                <option value="Photography">Photography</option>
+                <option value="Programming">Programming</option>
+                <option value="Travel">Travel</option>
+            </select>
+        </div>
+        <div>
             <label>Body</label>
             <textarea id="editor" asp-for="Body"></textarea>
         </div>
