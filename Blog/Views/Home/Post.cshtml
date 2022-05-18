@@ -1,8 +1,10 @@
 ﻿@model Post
 @{
-
+    ViewBag.Title = Model.Title;
+    ViewBag.Description = $"{Model.Description}";
+    ViewBag.Keywords = $"{Model.Tags?.Replace(@"([,] |[,]\s+ )", " ")} {Model.Category}";
 }
-@* <h1>Post</h1> *@
+@* <h1>Post</h1> *
 <div>
     @* <p>@Model.Title</p> *@
     @* *@
