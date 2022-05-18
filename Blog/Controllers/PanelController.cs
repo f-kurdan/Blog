@@ -40,6 +40,9 @@ namespace Blog.Controllers
                     ID = post.ID,
                     Title = post.Title,
                     Body = post.Body,
+                    Description = post.Description,
+                    Tags = post.Tags,
+                    Category = post.Category, 
                     CurrentImage = post.Image
                 };
                 return View(vm);
@@ -54,6 +57,9 @@ namespace Blog.Controllers
                 ID = vm.ID,
                 Title = vm.Title,
                 Body = vm.Body,
+                Description = vm.Description,
+                Category = vm.Category,
+                Tags = vm.Tags,
             };
 
             if (vm.Image == null)
