@@ -8,6 +8,8 @@ namespace Blog.Data.Repository
 
         List<Post> GetAllPosts();
 
+        List<Post> GetAllPosts(string category);
+
         void AddPost(Post post);
 
         void UpdatePost(Post post);

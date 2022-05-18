@@ -22,6 +22,13 @@ namespace Blog.Data.Repository
             return _context.Posts.ToList();
         }
 
+        public List<Post> GetAllPosts(string category)
+        {
+            return _context.Posts
+                .Where(x => x.Category.ToLower().Equals(category.ToLower()))
+                .ToList();
+        }
+
         public Post GetPost(int? id)
         {
             return _context.Posts.AsNoTracking().FirstOrDefault(x => x.ID == id);
