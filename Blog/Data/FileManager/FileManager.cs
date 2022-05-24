@@ -14,6 +14,20 @@
 			return new FileStream(Path.Combine(_imagePath, image), FileMode.Open, FileAccess.Read);
         }
 
+        public void RemoveImage(string image)
+        {
+            try
+            {
+				var path = Path.Combine(_imagePath, image);
+				if (File.Exists(path))
+					File.Delete(path);
+            }
+			catch(Exception e)
+            {
+				Console.WriteLine(e);
+            }
+        }
+
         public async Task<string> SaveImage(IFormFile image)
 		{
 			try
