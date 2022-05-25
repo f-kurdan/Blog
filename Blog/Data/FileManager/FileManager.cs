@@ -65,7 +65,9 @@ namespace Blog.Data.FileManager
 				ResizeMode = CropScaleMode.Crop,
 				EncoderOptions = new JpegEncoderOptions(100, ChromaSubsampleMode.Subsample420, false)
 			};
+
 			settings.TrySetEncoderFormat(ImageMimeTypes.Jpeg);
+
 			return settings;
         }
 	}

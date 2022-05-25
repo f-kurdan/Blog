@@ -2,13 +2,18 @@ using Blog.Data;
 using Blog.Data.FileManager;
 using Blog.Data.Repository;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppDbContext") ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
 
-builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
+builder.Services.AddMvc(options =>
+{
+    options.EnableEndpointRouting = false;
+    options.CacheProfiles.Add("Monthly", new CacheProfile { Duration = 60 * 60 * 24 * 7 * 4 });
+});
 
 builder.Services.AddTransient<IRepository, Repository>();
 builder.Services.AddTransient<IFileManager, FileManager>();

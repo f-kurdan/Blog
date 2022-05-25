@@ -32,6 +32,7 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="PhotoSauce.MagicScaler" Version="0.13.0" />
 		<PackageReference Include="PostSharp" Version="6.10.10" />
+		<PackageReference Include="WebEssentials.AspNetCore.OutputCaching" Version="1.0.43" />
 	</ItemGroup>
 
 	<ItemGroup>
