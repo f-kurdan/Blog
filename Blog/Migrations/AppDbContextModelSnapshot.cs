@@ -44,7 +44,7 @@ namespace Blog.Migrations
 
                     b.HasIndex("PostID");
 
-                    b.ToTable("MainComments");
+                    b.ToTable("MainComments", (string)null);
                 });
 
             modelBuilder.Entity("Blog.Models.Comments.SubComment", b =>
@@ -69,7 +69,7 @@ namespace Blog.Migrations
 
                     b.HasIndex("MainCommentId");
 
-                    b.ToTable("SubComments");
+                    b.ToTable("SubComments", (string)null);
                 });
 
             modelBuilder.Entity("Blog.Models.Post", b =>
@@ -109,7 +109,7 @@ namespace Blog.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
