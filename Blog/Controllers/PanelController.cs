@@ -73,8 +73,9 @@ namespace Blog.Controllers
 
             if (post.ID == 0)
                 _repo.AddPost(post);
+            else
+                _repo.UpdatePost(post);
 
-            _repo.UpdatePost(post);
             if (await _repo.SaveChangesAsync())
                 return RedirectToAction("Index", "Panel");
             return View(vm);

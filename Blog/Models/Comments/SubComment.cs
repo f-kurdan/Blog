@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Blog.Models.Comments
 {
-    public class SubComment
+    public class SubComment : Comment
     {
-
+        public int MainCommentID { get; set; }
     }
 }

@@ -56,6 +56,8 @@ namespace Blog.Data.FileManager
 				return "Error"; 
 			}
 		}
+
+
 		public ProcessImageSettings ImageOptions()
         {
 			var settings = new ProcessImageSettings()

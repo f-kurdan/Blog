@@ -1,38 +1,57 @@
-﻿@using System.Text.RegularExpressions
-@model Post
+﻿@model Post
 @{
-    ViewBag.Title = Model.Title;
-    ViewBag.Description = $"{Model.Description}";
-    ViewBag.Keywords = $"{Model.Tags?.Replace(",", " ")} {Model.Category}";
+	ViewBag.Title = Model.Title;
+	ViewBag.Description = $"{Model.Description}";
+	ViewBag.Keywords = $"{Model.Tags?.Replace(",", " ")} {Model.Category}";
 }
 @* <h1>Post</h1> *@
 <div>
-    @* <p>@Model.Title</p> *@
-    @* *@
-    @* @if (!string.IsNullOrEmpty(Model.Image)) *@
-    @* { *@
-    @*     var image_path = $"/image/{Model.Image}"; *@
-    @*     <img src="@image_path" alt="Some pic" width="500"/> *@
-    @* } *@
-    @* <p>@Model.Body</p> *@
-    <div class="container">
-        <div class="post">
-            @if (!string.IsNullOrEmpty(Model.Image))
-            {
-                var image_path = $"/image/{Model.Image}";
-                <img src="@image_path" alt="Some pic" width="500"/>
-                <span class="title">
-                    @Model.Title
-                </span>
-            }
-        </div>
-        <div class="post-body">
-           @Html.Raw( @Model.Body)
-        </div>
-        <a asp-controller="Panel" asp-action="Index">
-        To the list of posts
-        </a>
-    </div>
-    <br/>
+	@* <p>@Model.Title</p> *@
+	@* *@
+	@* @if (!string.IsNullOrEmpty(Model.Image)) *@
+	@* { *@
+	@*     var image_path = $"/image/{Model.Image}"; *@
+	@*     <img src="@image_path" alt="Some pic" width="500"/> *@
+	@* } *@
+	@* <p>@Model.Body</p> *@
+	<div class="container">
+		<div class="post">
+			@if (!string.IsNullOrEmpty(Model.Image))
+			{
+				var image_path = $"/image/{Model.Image}";
+				<img src="@image_path" alt="Some pic" width="500" />
+				<span class="title">
+					@Model.Title
+				</span>
+			}
+		</div>
+		<div class="post-body">
+			@Html.Raw( @Model.Body)
+		</div>
+		<div class="comment-section">
+			@{
+				await Html.RenderPartialAsync("_MainComment", new CommentViewModel { PostID = Model.ID, MainCommentID = 0 });
+			}
+
+			@foreach (var comment in Model.MainComments)
+			{
+				<p>@comment.Message -------- @comment.Created</p>
+				<div style="margin-left: 20px;">
+					@foreach (var sc in comment.SubComments)
+					{
+						<p>@sc.Message -------- @sc.Created</p>
+					}
+					<h4>Reply</h4>
+					@{
+						await Html.RenderPartialAsync("_MainComment", new CommentViewModel { PostID = Model.ID, MainCommentID = comment.ID });
+					}
+				</div>
+			}
+		</div>
+		<a asp-controller="Panel" asp-action="Index">
+			To the list of posts
+		</a>
+	</div>
+	<br />
 
 </div>

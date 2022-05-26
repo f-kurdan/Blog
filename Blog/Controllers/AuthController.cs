@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
 {
-    public class AuthController : Controller
+	public class AuthController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
 
@@ -16,11 +16,11 @@ namespace Blog.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View(new LoginViewModels());
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModels vm)
+        public async Task<IActionResult> Login(LoginViewModel vm)
         {
             await _signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
             return RedirectToAction("Index", "Panel");

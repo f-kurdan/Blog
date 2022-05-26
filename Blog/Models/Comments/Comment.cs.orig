@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Blog.Models.Comments
+{
+    public class Comment
+    {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+        public int ID { get; set; }
+=======
+        public int? ID { get; set; }
+>>>>>>> 76fd10338ca47449fde019b55189f203a574b9b7
+=======
+        public int? ID { get; set; }
+>>>>>>> 76fd10338ca47449fde019b55189f203a574b9b7
+=======
+        public int? ID { get; set; }
+>>>>>>> 76fd10338ca47449fde019b55189f203a574b9b7
+        public string Message { get; set; }
+        public DateTime Created { get; set; }
+    }
+}

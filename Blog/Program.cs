@@ -56,23 +56,23 @@ using (var scope = app.Services.CreateScope())
 
     context.Database.EnsureCreated();
 
-    var adminRole = new IdentityRole("Admin");
-    if (!context.Roles.Any())
-    {
-        roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
-    }
+	var adminRole = new IdentityRole("Admin");
+	if (!context.Roles.Any())
+	{
+		roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
+	}
 
-    if (!context.Users.Any(x => x.UserName == "admin"))
-    {
-        var adminUser = new IdentityUser()
-        {
-            UserName = "admin",
-            Email = "admin@test.com"
-        };
-        userMgr.CreateAsync(adminUser, "password").GetAwaiter().GetResult();
+	if (!context.Users.Any(x => x.UserName == "admin"))
+	{
+		var adminUser = new IdentityUser()
+		{
+			UserName = "admin",
+			Email = "admin@test.com"
+		};
+		userMgr.CreateAsync(adminUser, "password").GetAwaiter().GetResult();
 
-        userMgr.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
-    }
+		userMgr.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
+	}
 }
 
 app.UseStaticFiles();

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Blog.Models.Comments
 {
-    public class MainComment
+    public class MainComment : Comment
     {
-
+        public  List<SubComment> SubComments { get; set; }
     }
 }
