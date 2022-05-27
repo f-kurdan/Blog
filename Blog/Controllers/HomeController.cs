@@ -18,14 +18,16 @@ namespace Blog.Controllers
             _fileManager = fileManager;
         }
 
-        public IActionResult Index(string category)
+        public IActionResult Index(int pageNumber, string category)
         {
+            if (pageNumber < 1)
+                pageNumber = 1;
 
-            var posts = string.IsNullOrEmpty(category) ? _repo.GetAllPosts() : _repo.GetAllPosts(category);
-            return View(posts);
+            var vm = _repo.GetAllPosts(pageNumber, category);        
+            return View(vm);
         }
 
-        public IActionResult Post(int id)
+        public IActionResult Post(int? id)
         {
             if (id == null)
             {

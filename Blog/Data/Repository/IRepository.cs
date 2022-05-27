@@ -1,5 +1,6 @@
 ﻿using Blog.Models;
 using Blog.Models.Comments;
+using Blog.ViewModels;
 
 namespace Blog.Data.Repository
 {
@@ -9,7 +10,7 @@ namespace Blog.Data.Repository
 
         List<Post> GetAllPosts();
 
-        List<Post> GetAllPosts(string category);
+        IndexViewModel GetAllPosts(int pageNumber, string category);
 
         void AddPost(Post post);
 

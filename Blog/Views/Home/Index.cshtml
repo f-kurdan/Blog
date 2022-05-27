@@ -1,35 +1,50 @@
-﻿@model IEnumerable<Post>
+﻿@model IndexViewModel
 @{
-    ViewBag.Title = "My Blog";
-    ViewBag.Descrioption = "This blog is very interesting";
-    ViewBag.Keywords = "blog photography travel programming";
+	ViewBag.Title = "My Blog";
+	ViewBag.Descrioption = "This blog is very interesting";
+	ViewBag.Keywords = "blog photography travel programming";
 }
 @*<h1>Home Page</h1>
 
 <img src="~/content/static/IMG_6006.JPG" alt="Nature pic" width="100%" />*@
 <div class="main-img">
-    <span class="title">My Blog Post</span>
+	<span class="title">My Blog Post</span>
 </div>
 <div class="container">
-    @* <ul> *@
-    @* 	@foreach (var post in Model) *@
-    @* 	{ *@
-    @* *@
-    @* 		<li> *@
-    @* 			<a asp-controller="Home" asp-action="Post" asp-route-id="@post.ID"> *@
-    @* 				@post.Title *@
-    @* 			</a> *@
-    @* 		</li> *@
-    @* 	} *@
-    @* </ul> *@
-    @foreach (var post in Model)
-    {
-        var image_path = $"/image/{post.Image}";
-        <a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
-            <img src="@image_path" alt="Some pic"/>
-            <span class="title">
-                @post.Title
-            </span>
-        </a>
-    }
+	@* <ul> *@
+	@* 	@foreach (var post in Model) *@
+	@* 	{ *@
+	@* *@
+	@* 		<li> *@
+	@* 			<a asp-controller="Home" asp-action="Post" asp-route-id="@post.ID"> *@
+	@* 				@post.Title *@
+	@* 			</a> *@
+	@* 		</li> *@
+	@* 	} *@
+	@* </ul> *@
+	@foreach (var post in Model.Posts)
+	{
+		var image_path = $"/image/{post.Image}";
+		<a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
+			<img src="@image_path" alt="Some pic" />
+			<span class="title">
+				@post.Title
+			</span>
+		</a>
+	}
+	<div>
+		@{
+			if (Model.PageNumber > 1)
+			{
+
+				<a asp-controller="Home" asp-action="Index" asp-route-category="@Model.Category"
+				asp-route-pageNumber="@(Model.PageNumber - 1)">Previous page</a>
+			}
+			if (Model.CanGoNext)
+			{
+				<a asp-controller="Home" asp-action="Index" asp-route-category="@Model.Category"
+				asp-route-pageNumber="@(Model.PageNumber + 1)">Next page</a>
+			}
+		}
+	</div>
 </div>
