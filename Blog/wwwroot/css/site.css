@@ -9,9 +9,9 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
+    a:hover {
+        text-decoration: underline;
+    }
 
 
 nav {
@@ -22,10 +22,10 @@ nav {
     font-size: 120%
 }
 
-nav a {
-    display: inline-block;
-    padding: 15px;
-}
+    nav a {
+        display: inline-block;
+        padding: 15px;
+    }
 
 .main-img {
     position: relative;
@@ -48,7 +48,7 @@ nav a {
 .container {
     max-width: 800px;
     width: 100%;
-    margin: auto;    
+    margin: auto;
 }
 
 .post {
@@ -58,14 +58,23 @@ nav a {
     height: 400px;
 }
 
-.post img {
-    width: 100%;
-    object-fit: cover;
-}
+    .post img {
+        width: 100%;
+        object-fit: cover;
+    }
 
 post-body {
     margin: -5px 5px 0;
     padding: 20px 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+.pages {
+    text-align: center;
+    margin: 15px 0px 0px 15px
+}
+
+.current-page {
+    color: red;
 }

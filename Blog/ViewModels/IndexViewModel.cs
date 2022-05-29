@@ -9,7 +9,9 @@ namespace Blog.ViewModels
 {
 	public class IndexViewModel
 	{
-		public double PageNumber { get; set; }
+		public int PageNumber { get; set; }
+		public int PagesCount { get; set; }
+		public IEnumerable<int> Pages { get; set; }
         public string Category { get; set; }
         public bool CanGoNext { get; set; }
 		public IEnumerable<Post> Posts { get; set; }
