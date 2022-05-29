@@ -21,7 +21,7 @@ namespace Blog.Data.Repository
 
         public IndexViewModel GetAllPosts(int pageNumber, string category)
         {
-            var pageSize = 1;
+            var pageSize = 2;
             var skipAmount = pageSize * (pageNumber - 1);
             var allPosts = _context.Posts.AsQueryable();
 
@@ -55,35 +55,37 @@ namespace Blog.Data.Repository
                     yield return i;
                 }
             }
-
-            var midPoint = currentPage < 3 ? 3
-                : currentPage > pageCount - 2 ? pageCount - 2 
-                : currentPage;
-
-            var lowerBound = midPoint - 2;
-            var upperBound = midPoint + 2;
-
-            if (lowerBound != 1)
+            else
             {
-                yield return 1;
-                if (lowerBound - 1 > 1)
+                var midPoint = currentPage < 3 ? 3
+               : currentPage > pageCount - 2 ? pageCount - 2
+               : currentPage;
+
+                var lowerBound = midPoint - 2;
+                var upperBound = midPoint + 2;
+
+                if (lowerBound != 1)
                 {
-                    yield return -1;
+                    yield return 1;
+                    if (lowerBound - 1 > 1)
+                    {
+                        yield return -1;
+                    }
                 }
-            }
-           
-            for (int i = lowerBound; i <= upperBound; i++)
-            {
-                yield return i;
-            }
 
-            if (upperBound != pageCount)
-            {
-                if (pageCount - upperBound > 1)
+                for (int i = lowerBound; i <= upperBound; i++)
                 {
-                    yield return -1;
+                    yield return i;
                 }
-                yield return pageCount;
+
+                if (upperBound != pageCount)
+                {
+                    if (pageCount - upperBound > 1)
+                    {
+                        yield return -1;
+                    }
+                    yield return pageCount;
+                }
             }
         }
 
