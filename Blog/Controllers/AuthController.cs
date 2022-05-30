@@ -1,4 +1,5 @@
-﻿using Blog.ViewModels;
+﻿using Blog.Services.Email;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +9,16 @@ namespace Blog.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userMgr;
+        private readonly IEmailService _emailService;
 
-        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userMgr)
+        public AuthController(
+            SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityUser> userMgr,
+            IEmailService emailService)
         {
             _signInManager = signInManager;
             _userMgr = userMgr;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -36,7 +42,7 @@ namespace Blog.Controllers
             {
                 return RedirectToAction("Index", "Panel");
             }
-            
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -62,9 +68,11 @@ namespace Blog.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
+                await _emailService.SendEmail(user.Email, "Welcome", "Your account has been successfully registered!");
+                return RedirectToAction("Index", "Home");
             }
-            //return RedirectToAction("Index", "Panel");
-            return RedirectToAction("Index", "Home");
+
+            return View(vm);
         }
 
         [HttpGet]

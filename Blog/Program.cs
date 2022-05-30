@@ -1,11 +1,15 @@
+using Blog.Configuration;
 using Blog.Data;
 using Blog.Data.FileManager;
 using Blog.Data.Repository;
+using Blog.Services.Email;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppDbContext") ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
 
@@ -17,6 +21,7 @@ builder.Services.AddMvc(options =>
 
 builder.Services.AddTransient<IRepository, Repository>();
 builder.Services.AddTransient<IFileManager, FileManager>();
+builder.Services.AddSingleton<IEmailService, EmailService>();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
@@ -56,23 +61,23 @@ using (var scope = app.Services.CreateScope())
 
     context.Database.EnsureCreated();
 
-	var adminRole = new IdentityRole("Admin");
-	if (!context.Roles.Any())
-	{
-		roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
-	}
+    var adminRole = new IdentityRole("Admin");
+    if (!context.Roles.Any())
+    {
+        roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
+    }
 
-	if (!context.Users.Any(x => x.UserName == "admin"))
-	{
-		var adminUser = new IdentityUser()
-		{
-			UserName = "admin",
-			Email = "admin@test.com"
-		};
-		userMgr.CreateAsync(adminUser, "password").GetAwaiter().GetResult();
+    if (!context.Users.Any(x => x.UserName == "admin"))
+    {
+        var adminUser = new IdentityUser()
+        {
+            UserName = "admin",
+            Email = "admin@test.com"
+        };
+        userMgr.CreateAsync(adminUser, "password").GetAwaiter().GetResult();
 
-		userMgr.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
-	}
+        userMgr.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
+    }
 }
 
 app.UseStaticFiles();
