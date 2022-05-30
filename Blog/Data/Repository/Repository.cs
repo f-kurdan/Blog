@@ -36,7 +36,7 @@ namespace Blog.Data.Repository
             {
                 PageNumber = pageNumber,
                 PagesCount = pagesCount,
-                Pages = GetPageNumbers(pageNumber, pagesCount),
+                Pages = GetPageNumbers(pageNumber, pagesCount).ToList(),
                 Category = category,
                 CanGoNext = skipAmount + pageSize < postsCount,
                 Posts = allPosts

@@ -28,27 +28,36 @@
 		<div class="post-body">
 			@Html.Raw( @Model.Body)
 		</div>
-		<div class="comment-section">
-			@{
-				await Html.RenderPartialAsync("_MainComment", new CommentViewModel { PostID = Model.ID, MainCommentID = 0 });
-			}
+		@if (User.Identity.IsAuthenticated)
+		{
+			<div class="comment-section">
+				@{
+					await Html.RenderPartialAsync("_MainComment", new CommentViewModel { PostID = Model.ID, MainCommentID = 0 });
+				}
 
-			@foreach (var comment in Model.MainComments)
-			{
-				<p>@comment.Message -------- @comment.Created</p>
-				<div style="margin-left: 20px;">
-					@foreach (var sc in comment.SubComments)
-					{
-						<p>@sc.Message -------- @sc.Created</p>
-					}
-					<h4>Reply</h4>
-					@{
-						await Html.RenderPartialAsync("_MainComment", new CommentViewModel { PostID = Model.ID, MainCommentID = comment.ID });
-					}
-				</div>
-			}
-		</div>
-		<a asp-controller="Panel" asp-action="Index">
+				@foreach (var comment in Model.MainComments)
+				{
+					<p>@comment.Message -------- @comment.Created</p>
+					<div style="margin-left: 20px;">
+						@foreach (var sc in comment.SubComments)
+						{
+							<p>@sc.Message -------- @sc.Created</p>
+						}
+						<h4>Reply</h4>
+						@{
+							await Html.RenderPartialAsync("_MainComment", new CommentViewModel { PostID = Model.ID, MainCommentID = comment.ID });
+						}
+					</div>
+				}
+			</div>
+		}
+		else
+		{
+			<div>
+				<a asp-controller="Auth" asp-action="Login" >Sign in</a> to leave a comment!
+			</div>
+		}
+			<a asp-controller="Panel" asp-action="Index">
 			To the list of posts
 		</a>
 	</div>
