@@ -10,7 +10,7 @@ namespace Blog.Data.Repository
 
         List<Post> GetAllPosts();
 
-        IndexViewModel GetAllPosts(int pageNumber, string category);
+        IndexViewModel GetAllPosts(int pageNumber, string category, string searchString);
 
         void AddPost(Post post);
 

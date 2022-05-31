@@ -19,15 +19,24 @@ namespace Blog.Data.Repository
             _context.Add(post);
         }
 
-        public IndexViewModel GetAllPosts(int pageNumber, string category)
+        public IndexViewModel GetAllPosts(int pageNumber, string category, string searchString)
         {
             var pageSize = 2;
             var skipAmount = pageSize * (pageNumber - 1);
-            var allPosts = _context.Posts.AsQueryable();
+            var allPosts = _context.Posts.AsNoTracking().AsQueryable();
 
             if (!string.IsNullOrEmpty(category))
             {
                 allPosts = allPosts.Where(x => x.Category.ToLower().Equals(category.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allPosts = allPosts.Where(x =>                
+                    EF.Functions.Like(x.Title, $"%{searchString}%") ||
+                    EF.Functions.Like(x.Body, $"%{searchString}%") ||
+                    EF.Functions.Like(x.Category, $"%{searchString}%")
+                );
             }
 
             var postsCount = allPosts.Count();
@@ -36,6 +45,7 @@ namespace Blog.Data.Repository
             {
                 PageNumber = pageNumber,
                 PagesCount = pagesCount,
+                SearchString = searchString,
                 Pages = GetPageNumbers(pageNumber, pagesCount).ToList(),
                 Category = category,
                 CanGoNext = skipAmount + pageSize < postsCount,
