@@ -1,15 +1,17 @@
 ﻿@model CommentViewModel
 
-@{ 
+@{
 
 }
 
 <div>
-    <form method="post" asp-controller="Home" asp-action="Comment">
-        <input asp-for="PostID" type="hidden" />
-        <input asp-for="MainCommentID" type="hidden" />
-        <input asp-for="Message" />
-        <span asp-validation-for="Message"></span>
-        <button type="submit">Submit</button>
-    </form>
+	<form class="mb-4 method="post" asp-controller="Home" asp-action="Comment">
+		<input asp-for="PostID" type="hidden" />
+		<input asp-for="MainCommentID" type="hidden" />
+		<input name="UserName" value="@User.Identity.Name" type="hidden" />
+		<textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"
+				  asp-for="Message"></textarea>
+		<span asp-validation-for="Message"></span>
+		<button type="submit">Submit</button>
+	</form>
 </div>

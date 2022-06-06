@@ -21,9 +21,12 @@ namespace Blog.Data.Repository
 
         public IndexViewModel GetAllPosts(int pageNumber, string category, string searchString)
         {
-            var pageSize = 2;
+            var pageSize = 5;
             var skipAmount = pageSize * (pageNumber - 1);
-            var allPosts = _context.Posts.AsNoTracking().AsQueryable();
+            var allPosts = _context.Posts
+                .OrderByDescending(p => p.Created)
+                .AsNoTracking()
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(category))
             {
@@ -51,7 +54,7 @@ namespace Blog.Data.Repository
                 CanGoNext = skipAmount + pageSize < postsCount,
                 Posts = allPosts
                     .Skip(skipAmount)
-                    .Take(pageSize)
+                    .Take(pageSize)                    
                     .ToList()
             };
         }

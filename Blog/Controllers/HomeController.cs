@@ -60,6 +60,7 @@ namespace Blog.Controllers
 
                 post.MainComments.Add(new MainComment()
                 {
+                    UserName = vm.UserName,
                     Message = vm.Message,
                     Created = DateTime.Now
                 });
@@ -71,6 +72,7 @@ namespace Blog.Controllers
                 var comment = new SubComment
                 {
                     MainCommentID = vm.MainCommentID,
+                    UserName = vm.UserName,
                     Message = vm.Message,
                     Created = DateTime.Now
                 };

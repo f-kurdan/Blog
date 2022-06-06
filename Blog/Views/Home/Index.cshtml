@@ -4,44 +4,112 @@
 	ViewBag.Descrioption = "This blog is very interesting";
 	ViewBag.Keywords = "blog photography travel programming";
 }
-@*<h1>Home Page</h1>
 
-<img src="~/content/static/IMG_6006.JPG" alt="Nature pic" width="100%" />*@
-<div class="main-img">
-	<span class="title">My Blog Post</span>
-	<form asp-action="Index" asp-controller="Home" method="get">
-	<input type="text" asp-for="SearchString" /> 
-	<input type="hidden" asp-for="SearchString" /> 
-	<input type="hidden" asp-for="SearchString" /> 
-	<button class="submit-button">Submit</button>
-	</form>
+<!-- Page header with logo and tagline-->
+<header class="py-5 bg-light border-bottom mb-4">
+	<div class="container">
+		<div class="text-center my-5">
+			<h1 class="fw-bolder">Welcome to My Blog!</h1>
+		</div>
+	</div>
+</header>
+<div class="container">
+	<div class="row">
+		<!-- Blog entries-->
+		<div class="col-lg-8">
+			<!-- Nested row for non-featured blog posts-->
+			<div class="row justify-content-center">
+				<!-- Blog post-->
+				@foreach (var post in Model.Posts)
+				{
+					if (Model.Posts.ToList().IndexOf(post) == 0 && Model.PageNumber == 1)
+					{
+						<!-- Featured blog post-->
+						<div class="card mb-4 shadow-sm rounded overflow-hidden">
+							@{
+								var image_path = $"/image/{post.Image}";
+							}
+							<a asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
+								<img class="card-img-top" src="@image_path" alt="Some pic" />
+							</a>
+							<div class="card-body">
+								<div class="small text-muted">@post.Created</div>
+								<h2 class="card-title">@post.Title</h2>
+								<p class="card-text">@post.Body</p>
+								<a class="btn btn-primary" asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
+									Read more →
+								</a>
+							</div>
+						</div>
+					}
+					else
+					{
+						<div class="col-lg-6">
+							<div class="card mb-4 shadow-sm rounded overflow-hidden">
+								@{
+									var image_path = $"/image/{post.Image}";
+								}
+								<a asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
+									<img class="card-img-top" src="@image_path" alt="Some pic" />
+								</a>
+								<div class="card-body">
+									<div class="small text-muted">@post.Created</div>
+									<h2 class="card-title h4">@post.Title</h2>
+									<p class="card-text">@post.Body</p>
+									<a class="btn btn-primary" asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
+										Read more →
+									</a>
+								</div>
+							</div>
+						</div>
+					}
+				}
+			</div>
+			<!-- Pagination-->
+			<partial name="_BlogPagination" model="Model" />
+		</div>
+		<!-- Side widgets-->
+		<div class="col-lg-4">
+			<!-- Search widget-->
+			<div class="card mb-4">
+				<div class="card-header">Search</div>
+				<div class="card-body shadow-sm rounded overflow-hidden">
+					<form class="input-group" asp-action="Index" asp-controller="Home" method="get">
+						<input type="hidden" asp-for="PageNumber" />
+						<input type="hidden" asp-for="Category" />
+						<input class="form-control" type="text" placeholder="Enter search term..." asp-for="SearchString" />
+						<button class="btn btn-primary">Go!</button>
+					</form>
+				</div>
+			</div>
+			<!-- Categories widget-->
+			<div class="card text-center mb-6">
+				<div class="card-header">Categories</div>
+				<div class="card-body shadow-sm rounded overflow-hidden">
+					<div class="row justify-content-center">
+						<ul class="list-unstyled mb-0">
+							<li class="me-1 list-inline-item col-sm-4">
+								<a class=" link-dark text-decoration-none" asp-controller="Home" asp-action="Index"
+								   asp-route-category="Programming">Programming</a>
+							</li>
+							<li class="me-1 list-inline-item col-sm-4">
+								<a class="link-dark text-decoration-none" asp-controller="Home" asp-action="Index"
+								   asp-route-category="Photography">Photography</a>
+							</li>
+							<li class="me-1 list-inline-item col-sm-4">
+								<a class="link-dark text-decoration-none" asp-controller="Home" asp-action="Index"
+								   asp-route-category="Travel">Travel</a>
+							</li>
+							<li class="me-1 list-inline-item col-sm-4">
+								<a class=" link-dark text-decoration-none" asp-controller="Home" asp-action="Index"
+								   asp-route-category="">All</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="container">
-	@* <ul> *@
-	@* 	@foreach (var post in Model) *@
-	@* 	{ *@
-	@* *@
-	@* 		<li> *@
-	@* 			<a asp-controller="Home" asp-action="Post" asp-route-id="@post.ID"> *@
-	@* 				@post.Title *@
-	@* 			</a> *@
-	@* 		</li> *@
-	@* 	} *@
-	@* </ul> *@
-
-	<partial name="_BlogPagination" model="Model" />
-
-	@foreach (var post in Model.Posts)
-	{
-		var image_path = $"/image/{post.Image}";
-		<a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.ID">
-			<img src="@image_path" alt="Some pic" />
-			<span class="title">
-				@post.Title
-			</span>
-		</a>
-	}
-
-	<partial name="_BlogPagination" model="Model" />
-	
 </div>

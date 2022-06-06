@@ -4,16 +4,7 @@
 	ViewBag.Description = $"{Model.Description}";
 	ViewBag.Keywords = $"{Model.Tags?.Replace(",", " ")} {Model.Category}";
 }
-@* <h1>Post</h1> *@
-<div>
-	@* <p>@Model.Title</p> *@
-	@* *@
-	@* @if (!string.IsNullOrEmpty(Model.Image)) *@
-	@* { *@
-	@*     var image_path = $"/image/{Model.Image}"; *@
-	@*     <img src="@image_path" alt="Some pic" width="500"/> *@
-	@* } *@
-	@* <p>@Model.Body</p> *@
+@*<div>
 	<div class="container">
 		<div class="post">
 			@if (!string.IsNullOrEmpty(Model.Image))
@@ -63,4 +54,132 @@
 	</div>
 	<br />
 
+</div>*@
+
+<!-- Page content-->
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-lg-8">
+			<!-- Post content-->
+			<article>
+				<!-- Post header-->
+				<header class="mb-4">
+					<!-- Post title-->
+					<h1 class="fw-bolder mb-1">@Model.Title</h1>
+					<!-- Post meta content-->
+					<div class="text-muted fst-italic mb-2">@Model.Created</div>
+					<!-- Post categories-->
+					<a class="badge bg-secondary text-decoration-none link-light" href="#!">@Model.Category</a>
+				</header>
+				<!-- Preview image figure-->
+				@if (!string.IsNullOrEmpty(Model.Image))
+				{
+					var image_path = $"/image/{Model.Image}";
+					<figure class="mb-4"><img class="img-fluid rounded" src="@image_path" alt="Image" /></figure>
+				}
+				<!-- Post content-->
+				<section class="mb-5">
+					<p class="fs-5 mb-4">@Html.Raw(@Model.Body)</p>
+				</section>
+			</article>
+			<!-- Comments section-->
+			<section class="mb-5">
+				<div class="card bg-light">
+					<div class="card-body">
+						<!-- Comment form-->
+						@if (User.Identity.IsAuthenticated)
+						{
+							await Html.RenderPartialAsync("_MainComment",
+							new CommentViewModel { PostID = Model.ID, MainCommentID = 0 });
+
+							<!-- Comment with nested comments-->
+							<div class="d-flex mb-4">
+								<!-- Parent comment-->
+								<div class="flex-shrink-0">
+									<img class="rounded-circle"
+									 src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+								</div>
+								<div class="ms-3">
+									@foreach (var comment in Model.MainComments)
+									{
+										<div class="fw-bold">@comment.UserName</div>
+										<div class="fw">@comment.Created</div>
+										@comment.Message
+										@foreach (var sc in comment.SubComments)
+										{
+											<div div class="d-flex mt-4">
+												<div class="flex-shrink-0">
+													<img class="rounded-circle"
+											 src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+													<div class="ms-3">
+														<div class="fw-bold">@comment.UserName</div>
+														<div class="fw">@comment.Created</div>
+														@comment.Message
+													</div>
+												</div>
+											</div>
+										}
+										<h4>Reply</h4>
+										{
+											await Html.RenderPartialAsync("_MainComment", new CommentViewModel
+					{ PostID = Model.ID, MainCommentID = comment.ID, UserName = comment.UserName });
+										}
+									}
+								</div>
+							</div>
+						}
+						else
+						{
+							<div>
+								<a asp-controller="Auth" asp-action="Login">Sign in</a> to leave a comment!
+							</div>
+						}
+
+					</div>
+				</div>
+			</section>
+		</div>
+		@*<!-- Side widgets-->
+		<div class="col-lg-4">
+		<!-- Search widget-->
+		<div class="card mb-4">
+		<div class="card-header">Search</div>
+		<div class="card-body shadow-sm rounded overflow-hidden">
+		<form class="input-group" asp-action="Index" asp-controller="Home" method="get">
+		<input type="hidden" asp-for="PageNumber" />
+		<input type="hidden" asp-for="Category" />
+		<input class="form-control" type="text" placeholder="Enter search term..." asp-for="SearchString" />
+		<button class="btn btn-primary">Go!</button>
+		</form>
+		</div>
+		</div>
+		<!-- Categories widget-->
+		<div class="card text-center mb-6">
+		<div class="card-header">Categories</div>
+		<div class="card-body shadow-sm rounded overflow-hidden">
+		<div class="row justify-content-center">
+		<ul class="list-unstyled mb-0">
+		<li class="me-1 list-inline-item col-sm-4">
+		<a class=" link-dark text-decoration-none" asp-controller="Home" asp-action="Index"
+		asp-route-category="Programming">Programming</a>
+		</li>
+		<li class="me-1 list-inline-item col-sm-4">
+		<a class="link-dark text-decoration-none" asp-controller="Home" asp-action="Index"
+		asp-route-category="Photography">Photography</a>
+		</li>
+		<li class="me-1 list-inline-item col-sm-4">
+		<a class="link-dark text-decoration-none" asp-controller="Home" asp-action="Index"
+		asp-route-category="Travel">Travel</a>
+		</li>
+		<li class="me-1 list-inline-item col-sm-4">
+		<a class=" link-dark text-decoration-none" asp-controller="Home" asp-action="Index"
+		asp-route-category="">All</a>
+		</li>
+		</ul>
+		</div>
+		</div>
+		</div>
+		</div>*@
+
+	</div>
 </div>

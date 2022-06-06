@@ -2,30 +2,45 @@
 
 <div class="pages">
 	@{
-		if (Model.PageNumber > 1)
-		{
-			<a asp-controller="Home" asp-action="Index" asp-route-category="@Model.Category" 
-			asp-route-searchString="@Model.SearchString" asp-route-pageNumber="@(Model.PageNumber - 1)"> &lt; </a>
-		}
+		<nav aria-label="Pagination">
+			<hr class="my-0" />
+			<ul class="pagination justify-content-center my-4">
+				@if (Model.PageNumber > 1)
+				{
+				<li class="page-item">
+					<a class="page-link" asp-controller="Home" asp-action="Index" asp-route-category="@Model.Category"
+				   asp-route-searchString="@Model.SearchString" asp-route-pageNumber="@(Model.PageNumber - 1)">Newer</a>
+				</li>
+				}
 
-		foreach (var p in Model.Pages)
-		{
-			if (p == -1)
-			{
-				<span>...</span>
-			}
-			else
-			{
-				<a class="@(p == Model.PageNumber ? "current-page" : "")" asp-controller="Home" asp-action="Index" 
-				asp-route-category="@Model.Category" asp-route-searchString="@Model.SearchString" 
-				asp-route-pageNumber="@p">@p</a>
-			}
-		}
+				@foreach (var p in Model.Pages)
+				{
+					if (p == -1)
+					{
+						<li class="page-item">
+							<span class="page-link">...</span>
+						</li>
+					}
+					else
+					{
+						<li class="page-item @(p == Model.PageNumber ? "active" : "")">
+							<a class="page-link" asp-controller="Home" asp-action="Index"
+				   asp-route-category="@Model.Category" asp-route-searchString="@Model.SearchString"
+				   asp-route-pageNumber="@p">@p</a>
+						</li>
 
-		if (Model.CanGoNext)
-		{
-			<a asp-controller="Home" asp-action="Index" asp-route-category="@Model.Category" 
-			asp-route-searchString="@Model.SearchString" asp-route-pageNumber="@(Model.PageNumber + 1)"> > </a>
-		}
+					}
+				}
+
+				@if (Model.CanGoNext)
+				{
+				<li class="page-item">
+					<a class="page-link" asp-controller="Home" asp-action="Index" asp-route-category="@Model.Category"
+				   asp-route-searchString="@Model.SearchString" asp-route-pageNumber="@(Model.PageNumber + 1)"> Older </a>
+				</li>
+				}
+			</ul>
+		</nav>
+
 	}
 </div>

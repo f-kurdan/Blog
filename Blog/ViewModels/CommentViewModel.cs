@@ -9,6 +9,8 @@ namespace Blog.ViewModels
         [Required]
         public int MainCommentID { get; set; }
         [Required]
+        public string UserName { get; set; }
+        [Required]
         public string Message { get; set; }
 
     }
